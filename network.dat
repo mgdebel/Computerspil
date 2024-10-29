@@ -1,0 +1,240 @@
+// network.dat
+//
+// by Nikolaj I. Schwartzbach
+//                   May 2019
+//
+
+// Background
+Background  map.png
+
+// Set seed
+Game        0
+
+
+Country     Denmark
+
+// Create cities
+City        København	100 capital
+City        Aalborg     80  border
+City        Aarhus      250
+City        Esbjerg     125
+City        Struer      100
+City        Odense      70
+City        Herning     65
+City        Nykøbing    50
+
+// Create roads
+Road        Nykøbing        København	40
+Road        København	    Odense      30
+Road        Herning         Esbjerg     30
+Road        Odense          Esbjerg     30
+Road        Aalborg         Aarhus      20
+Road        Herning         Aarhus      20
+Road        Odense          Aarhus      20
+Road        Struer          Herning     20
+
+
+
+Country     Norway
+
+// Create cities
+City        Oslo            125     capital
+City        Narvik          150     border
+City        Trondheim       140     border
+City        Kristiansand    50      border
+City        Kirkenes        200
+City        Stavanger       200
+City        Tromsø          180
+City        Bergen          175
+City        Åndalsnes       150
+City        Dombås          110
+City        Lillehammer     110
+City        Myrdal          70
+City        Bodø            40
+
+// Create roads
+Road        Bodø            Trondheim   70
+Road        Oslo            Stavanger   40
+Road        Tromsø          Kirkenes    40
+Road        Kristiansand    Oslo        30
+Road        Lillehammer     Dombås      30
+Road        Myrdal          Oslo        30
+Road        Oslo            Lillehammer 30
+Road        Dombås          Åndalsnes   20
+Road        Dombås          Trondheim   20
+Road        Kristiansand    Stavanger   20
+Road        Lillehammer     Trondheim   20
+Road        Myrdal          Bergen      20
+Road        Narvik          Tromsø      20
+
+
+
+Country     Sweden	mafia
+
+// Create cities
+City        Stockholm       190     capital
+City        Luleå           95      border
+City        Malmö           95      border
+City        Karlstad        85      border
+City        Östersund       50      border
+City        Örebro          130
+City        Sundsvall       120
+City        Strömstad       120
+City        Jönköping       110
+City        Gällivare       100
+City        Helsingborg     100
+City        Kvillsfors      100
+City        Gävle           90
+City        Göteborg        90
+City        Kalmar          90
+City        Visby           90
+City        Kiruna          80
+City        Linköping       80
+City        Karlskrona      75
+City        Umeå            75
+City        Falun           70
+City        Uppsala         60
+City        Mora            50
+City        Torsby          40
+
+// Create roads
+Road        Visby           Kalmar          60
+Road        Visby           Linköping       50
+Road        Jönköping       Linköping       30
+Road        Jönköping       Göteborg        30
+Road        Karlskrona      Malmö           30
+Road        Karlstad        Göteborg        40
+Road        Karlstad        Örebro          20
+Road        Karlstad        Torsby          20
+Road        Örebro          Stockholm       30
+Road        Uppsala         Stockholm       20
+Road        Uppsala         Gävle           20
+Road        Linköping       Stockholm       30
+Road        Gävle           Sundsvall       40
+Road        Östersund       Sundsvall       30
+Road        Kalmar          Linköping       40
+Road        Umeå            Sundsvall       20
+Road        Umeå            Luleå           30
+Road        Luleå           Gällivare       40
+Road        Gällivare       Kiruna          20
+Road        Falun           Mora            20
+Road        Falun           Gävle           20
+Road        Falun           Örebro          30
+Road        Östersund       Gällivare       120
+Road        Helsingborg     Malmö           10
+Road        Helsingborg     Jönköping       30
+Road        Karlskrona      Kalmar          10
+Road        Strömstad       Göteborg        10
+Road        Strömstad       Karlstad        30
+Road        Kvillsfors      Jönköping       20
+Road        Gävle           Östersund       60
+
+
+
+Country     Finland
+
+// Create cities
+City        Helsinki    210     capital
+City        Kermi       40      border
+City        Tampere     120
+City        Pohjanmaa   100
+City        Kokkola     85
+City        Oulu        70
+City        Turku       70
+City        Kuopio      50
+City        Vaasa       50
+City        Pori        30
+City        Rovaniemi   30
+
+// Create roads
+Road        Kuopio      Helsinki    50
+Road        Kokkola     Oulu        40
+Road        Kuopio      Oulu        40
+Road        Kuopio      Tampere     40
+Road        Pohjanmaa   Tampere     40
+Road        Pohjanmaa   Kokkola     30
+Road        Vaasa       Pori        30
+Road        Kermi       Rovaniemi   20
+Road        Kermi       Oulu        20
+Road        Helsinki    Tampere     20
+Road        Pori        Tampere     20
+Road        Pori        Turku       20
+Road        Turku       Tampere     20
+Road        Turku       Helsinki    20
+Road        Vaasa       Pohjanmaa   20
+
+// Create border roads
+Road        Helsinki    Stockholm       80
+Road        Aalborg     Kristiansand    30
+Road        Narvik      Kiruna          30
+Road        Trondheim   Östersund       30
+Road        Luleå       Kermi           20
+Road        Oslo        Karlstad        20
+Road        Malmö       København      10
+
+
+// -----  POSITIONS  -----
+
+// Denmark
+Position    København      162     554
+Position    Aarhus          118     535
+Position    Odense          125     563
+Position    Aalborg         113     506
+Position    Esbjerg         87      562
+Position    Herning         98      535
+Position    Nykøbing        150     585
+Position    Struer          85      520
+
+// Norway
+Position    Kristiansand    94      467
+Position    Stavanger       61      435
+Position    Oslo            141     406
+Position    Bergen          60      379
+Position    Trondheim       151     293
+Position    Bodø            212     166
+Position    Tromsø          266     86
+Position    Kirkenes        396     60
+Position    Lillehammer     151     365
+Position    Myrdal          97      384
+Position    Åndalsnes       102     315
+Position    Narvik          254     118
+Position    Dombås          122     334
+
+// Sweden
+Position    Malmö           182     552
+Position    Kalmar          238     517
+Position    Visby           274     486
+Position    Jönköping       190     483
+Position    Göteborg        162     485
+Position    Karlstad        188     437
+Position    Linköping       233     454
+Position    Stockholm       271     431
+Position    Gävle           248     370
+Position    Karlskrona      228     533
+Position    Sundsvall       262     312
+Position    Östersund       212     296
+Position    Umeå            293     275
+Position    Luleå           316     213
+Position    Helsingborg     174     535
+Position    Strömstad       155     454
+Position    Kvillsfors      215     501
+Position    Örebro          217     434
+Position    Uppsala         260     407
+Position    Torsby          178     405
+Position    Gällivare       291     152
+Position    Kiruna          284     133
+Position    Mora            201     369
+Position    Falun           220     398
+
+// Finland
+Position    Kermi           354     208
+Position    Rovaniemi       363     180
+Position    Oulu            370     234
+Position    Kuopio          420     302
+Position    Vaasa           320     300
+Position    Pori            325     356
+Position    Tampere         359     353
+Position    Helsinki        382     396
+Position    Turku           337     395
+Position    Pohjanmaa       349     313
+Position    Kokkola         344     275

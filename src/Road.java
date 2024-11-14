@@ -25,19 +25,35 @@ public class Road implements Comparable<Road> {
         this.length = length;
     }
 
+    /**
+     * Returns a string representation of the road in the format "from -> to : length".
+     * @return a string representation of the road
+     */
     @Override
     public String toString() {
         return from + " -> " + to + " : " + length;
     }
 
+    /**
+     * Returns the city at the start of the road.
+     * @return the city at the start of the road
+     */
     public City getFrom() {
         return from;
     }
 
+    /**
+     * Returns the city at the end of the road.
+     * @return the city at the end of the road
+     */
     public City getTo() {
         return to;
     }
 
+    /**
+     * Returns the length of the road.
+     * @return the length of the road
+     */
     public int getLength() {
         return length;
     }

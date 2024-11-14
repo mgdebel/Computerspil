@@ -30,23 +30,43 @@ public class Position {
         this.total = distance;
     }
 
+    /**
+     * Returns a string representation of the position in the format "from -> to : distance/total".
+     * @return
+     */
     @Override
     public String toString() {
         return from + " -> " + to + " : " + distance + "/" + total;
     }
 
+    /**
+     * Returns the city where the player is coming from.
+     * @return the city where the player is coming from
+     */
     public City getFrom() {
         return from;
     }
 
+    /**
+     * Returns the city where the player is going to.
+     * @return the city where the player is going to
+     */
     public City getTo() {
         return to;
     }
 
+    /**
+     * Returns the distance between the two cities.
+     * @return the distance between the two cities
+     */
     public int getDistance() {
         return distance;
     }
 
+    /**
+     * Returns the total distance between the two cities.
+     * @return the total distance between the two cities
+     */
     public int getTotal() {
         return total;
     }

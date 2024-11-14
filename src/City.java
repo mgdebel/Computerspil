@@ -34,30 +34,57 @@ public class City implements Comparable<City> {
         return bonus;
     }
 
+    /**
+     * Returns the country of the city.
+     * @return the country of the city
+     */
     public Country getCountry() {
         return country;
     }
 
+    /**
+     * Returns the name of the city.
+     * @return the name of the city
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Returns the value of the city.
+     * @return the value of the city
+     */
     public int getValue() {
         return value;
     }
 
+    /**
+     * Returns the initial value of the city.
+     * @return the initial value of the city
+     */
     public int getInitialValue() {
         return initialValue;
     }
 
+    /**
+     * Changes the value of the city by a given amount.
+     * @param amount: the amount to change the value by
+     */
     public void changeValue(int amount) {
         value += amount;
     }
 
+    /**
+     * Resets the value of the city to the initial value.
+     */
     public void reset() {
         value = initialValue;
     }
 
+    /**
+     * Returns a string representation of the city.
+     * @return a string representation of the city
+     */
     @Override
     public String toString() {
         return name + " (" + value + ")";

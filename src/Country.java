@@ -33,6 +33,11 @@ public class Country {
         network.put(c, new TreeSet<>());
     }
 
+    /**
+     * Creates a position where the player is at a city.
+     * @param city the city where the player is
+     * @return a position where the player is at the city
+     */
     public Position position(City city) {
         return new Position(city, city, 0);
     }

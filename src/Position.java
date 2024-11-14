@@ -32,7 +32,7 @@ public class Position {
 
     /**
      * Returns a string representation of the position in the format "from -> to : distance/total".
-     * @return
+     * @return a string representation of the position
      */
     @Override
     public String toString() {

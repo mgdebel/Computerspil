@@ -14,6 +14,10 @@ public class PositionTest {
     private Country country1;
     private City cityA, cityB, cityC, cityD;
     private Position pos1, pos2, pos3;
+
+    /**
+     * Set up the test environment
+     */
     @BeforeEach
     public void setUp() {
         // Create game object
@@ -31,6 +35,10 @@ public class PositionTest {
         pos2 = new Position(cityC, cityD, 2);
         pos3 = new Position(cityD, cityA, 0);
     }
+
+    /**
+     * Test the constructor
+     */
     @Test
     public void constructor() {
         assertEquals(cityA, pos1.getFrom());
@@ -46,6 +54,10 @@ public class PositionTest {
         assertEquals(0, pos3.getDistance());
         assertEquals(0, pos3.getTotal());
     }
+
+    /**
+     * Test the toString method
+     */
     @Test
     public void testToString() {
         assertEquals("City A (80) -> City B (60) : 4/4", pos1.toString());
@@ -57,6 +69,9 @@ public class PositionTest {
         assertEquals("City D (100) -> City A (80) : 0/0", pos3.toString());
     }
 
+    /**
+     * Test the getDistance method
+     */
     @Test
     public void move() {
         assertTrue(pos2.move());//assertEquals(true, pos2.move());
@@ -68,6 +83,9 @@ public class PositionTest {
         assertEquals(0, pos3.getDistance());
     }
 
+    /**
+     * Test the getTotal method
+     */
     @Test
     public void turnAround() {
         pos1.move();
@@ -89,6 +107,9 @@ public class PositionTest {
         assertEquals(2, pos2.getDistance());
     }
 
+    /**
+     * Test the hasArrived method
+     */
     @Test
     public void hasArrived() {
         assertFalse(pos2.hasArrived());

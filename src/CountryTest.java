@@ -1,9 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -12,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author 202406714 Magnus Debel-Hansen og 20240543 Alexander Bak
  */
 
-class CountryTest {
+public class CountryTest {
     private Game game;
     private Country country1, country2;
     private City cityA, cityB, cityC;
@@ -78,22 +75,83 @@ class CountryTest {
 
     @Test
     public void addCity() {
+        country1.addCity(cityA);
+        assertEquals(1, country1.getCities().size());
+        assertEquals(cityA, country1.getCity("City A"));
+        country1.addCity(cityB);
+        assertEquals(2, country1.getCities().size());
+        assertEquals(cityB, country1.getCity("City B"));
+        assertEquals(0, country2.getCities().size());
+        assertNotEquals(cityA, country2.getCity("City A"));
+        assertNull(country2.getCity("City A"));
     }
 
     @Test
     public void position() {
+        country1.addCity(cityA);
+        country1.addCity(cityB);
+        country1.addCity(cityC);
+        Position positionA = country1.position(cityA);
+        assertEquals(0,positionA.getDistance());
+        assertEquals(0,positionA.getTotal());
+        positionA.move();
+        assertEquals(0,positionA.getDistance());
+        assertEquals(0,positionA.getTotal());
+        positionA.turnAround();
+        assertEquals(0,positionA.getDistance());
+        assertEquals(0,positionA.getTotal());
+        Position positionB = country2.position(cityB);
     }
 
     @Test
     public void readyToTravel() {
+        country1.addCity(cityA);
+        country1.addCity(cityB);
+        country2.addCity(cityC);
+        country1.addRoads(cityA,cityB,5);
+        Position position1 = country1.readyToTravel(cityC,cityA);
+        Position position2 = country1.readyToTravel(cityA,cityA);
+        Position position3 = country1.readyToTravel(cityA,cityB);
+        assertEquals(0,position1.getDistance());
+        assertEquals(0,position2.getDistance());
+        assertEquals(5,position3.getDistance());
+        assertEquals(cityC,position1.getFrom());
+        assertEquals(cityC,position1.getTo());
+        assertEquals(cityA,position2.getFrom());
+        assertEquals(cityA,position2.getTo());
+        assertEquals(cityA,position3.getFrom());
+        assertEquals(cityB,position3.getTo());
+        position3.turnAround();
+        assertEquals(0,position3.getDistance());
     }
 
     @Test
     public void addRoads() {
+        assertEquals(0,country1.getRoads(cityA).size());
+        country1.addCity(cityA);
+        country1.addCity(cityB);
+        country1.addCity(cityC);
+        City cityD = new City("City D", 100, country2);
+        country2.addCity(cityD);
+        country1.addRoads(cityA,cityB,4);
+        country1.addRoads(cityA,cityB,-1);
+        country1.addRoads(cityA,cityD,5);
+        assertEquals(0,country1.getRoads(cityC).size());
+        assertEquals(0,country2.getRoads(cityD).size());
+        assertEquals(2,country1.getRoads(cityA).size());
+        country1.addRoads(cityA,cityC,1);
+        assertEquals(3,country1.getRoads(cityA).size());
+        assertEquals(1,country1.getRoads(cityC).size());
     }
 
     @Test
     public void setGame() {
+        Country country3 = new Country("Country 3");
+        Game game2 = new Game(1);
+        assertNull(country3.getGame());
+        country3.setGame(game2);
+        assertEquals(game2,country3.getGame());
+        assertEquals(game,country1.getGame());
     }
     @Test
     public void reset() {
@@ -126,6 +184,7 @@ class CountryTest {
 
     @Test
     public void testToString() {
-        assertEquals("",country1.toString());
+        assertEquals("Country 1",country1.toString());
+        assertEquals("Country 2",country2.toString());
     }
 }

@@ -36,10 +36,13 @@ public class Country {
     /**
      * Creates a position where the player is at a city.
      * @param city the city where the player is
-     * @return a position where the player is at the city
+     * @return a position where the player is at the city or null if the city is not part of the country
      */
     public Position position(City city) {
-        return new Position(city, city, 0);
+        if(getCity(city.getName()) != null) {
+            return new Position(city, city, 0);
+        }
+        return null;
     }
 
     /**
@@ -55,6 +58,9 @@ public class Country {
             return position(from);
         }
         Road road = getRoads(from).stream().filter(r -> r.getTo().equals(to)).findFirst().orElse(null);
+        if(road == null){
+            road = getRoads(to).stream().filter(r -> r.getFrom().equals(from)).findFirst().orElse(null);
+        }
         if (road == null) {
             return position(from);
         }
@@ -74,11 +80,29 @@ public class Country {
         if (a.equals(b)) {
             return;
         }
-        if (network.containsKey(a)) {
-            network.get(a).add(new Road(a, b, length));
+        if (a.getCountry() != this && b.getCountry() != this) {
+            return;
         }
-        if (network.containsKey(b)) {
-            network.get(b).add(new Road(b, a, length));
+//        if (network.getOrDefault(a, Collections.emptySet()).stream()
+//                .anyMatch(road -> road.getTo().equals(b)) ||
+//                network.getOrDefault(b, Collections.emptySet()).stream()
+//                        .anyMatch(road -> road.getTo().equals(a))) {
+//            return;
+//        }
+        if (a.getCountry() == this && b.getCountry() != this) {
+            //City a is in this country and b is in another
+            Road road = new Road(a, b, length);
+            network.get(a).add(road);
+        }else if(b.getCountry() == this && a.getCountry() != this) {
+            //City b is in this country and a is in another
+            Road road = new Road(b, a, length);
+            network.get(b).add(road);
+        }else{
+            //Both cities are in same country
+            Road road1 = new Road(a, b, length);
+            Road road2 = new Road(b, a, length);
+            network.get(a).add(road1);
+            network.get(b).add(road2);
         }
     }
 
@@ -91,7 +115,6 @@ public class Country {
         if (value <= 0) {
             return 0;
         }
-
         return game.getRandom().nextInt(value + 1);
     }
 

@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests the various methods and variables of City
@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author 202406714 Magnus Debel-Hansen og 20240543 Alexander Bak
  */
 
-class CityTest {
+public class CityTest {
     private Game game;
     private Country country1, country2;
     private City cityA, cityB;

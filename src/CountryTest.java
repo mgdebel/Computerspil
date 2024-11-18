@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -24,8 +27,8 @@ public class CountryTest {
         country2.setGame(game);
         // Create cities
         cityA = new City("City A", 80, country1);
-        cityB = new City("City B", 60, country2);
-        cityC = new City("City C", 40, country1);
+        cityB = new City("City B", 60, country1);
+        cityC = new City("City C", 40, country2);
     }
 
     @Test
@@ -127,21 +130,28 @@ public class CountryTest {
 
     @Test
     public void addRoads() {
-        assertEquals(0,country1.getRoads(cityA).size());
         country1.addCity(cityA);
-        country1.addCity(cityB);
-        country1.addCity(cityC);
-        City cityD = new City("City D", 100, country2);
-        country2.addCity(cityD);
-        country1.addRoads(cityA,cityB,4);
-        country1.addRoads(cityA,cityB,-1);
-        country1.addRoads(cityA,cityD,5);
-        assertEquals(0,country1.getRoads(cityC).size());
-        assertEquals(0,country2.getRoads(cityD).size());
-        assertEquals(2,country1.getRoads(cityA).size());
-        country1.addRoads(cityA,cityC,1);
-        assertEquals(3,country1.getRoads(cityA).size());
-        assertEquals(1,country1.getRoads(cityC).size());
+        country2.addCity(cityB);
+        country2.addCity(cityC);
+        City cityD = new City("City D",30,country2);
+        country1.addCity(cityD);
+        country1.addRoads(cityA, cityA, 10);
+        assertEquals(0, country1.getRoads(cityA).size());
+        country1.addRoads(cityA, cityD, 0);
+        assertEquals(0, country1.getRoads(cityA).size());
+        country1.addRoads(cityA, cityD, 1);
+        assertEquals(1, country1.getRoads(cityA).size());
+        assertEquals(1, country1.getRoads(cityD).size());
+        country1.addRoads(cityB, cityC, 10);
+        assertEquals(0, country1.getRoads(cityB).size());
+        assertEquals(0, country1.getRoads(cityC).size());
+        country1.addRoads(cityA, cityD, 10);
+        assertEquals(2, country1.getRoads(cityA).size());
+        assertEquals(2, country1.getRoads(cityD).size());
+        country1.addRoads(cityA, cityB, 10);
+        assertEquals(3, country1.getRoads(cityA).size());
+        country1.addRoads(cityB, cityA, 10);
+        assertEquals(0, country1.getRoads(cityB).size());
     }
 
     @Test
@@ -169,16 +179,35 @@ public class CountryTest {
 
     @Test
     public void bonus() {
+        assertEquals(0,country1.bonus(0) );
+        assertEquals(0,country1.bonus(-1) );
         for(int seed = 0; seed < 100; seed++) { // Try 100 different seeds
             game.getRandom().setSeed(seed);
-            //...
+            ArrayList<Integer> bonuses = new ArrayList<Integer>();
+            int sum = 0;
             for(int i = 0; i < 100000; i++) { // Call method 100.000 times
                 int bonus = country1.bonus(80);
+                bonuses.add(bonus);
+                sum += bonus;
                 //Test at værdien ligger i det korrekte interval
-                //...
+                assertTrue(bonus >= 0);
+                assertTrue(bonus <= 80);
+
+            }
+            for(int i = 0; i < 100000; i++) { // Call method 100.000 times
+                int bonus = country1.bonus(1);
+                //Test at værdien ligger i det korrekte interval
+                assertTrue(bonus >= 0);
+                assertTrue(bonus <= 1);
+
             }
             //Test at middelværdien er tæt på det forventede
+            assertTrue(((double) sum) / ((double)100000) >= 35);
+            assertTrue(((double) sum) / ((double)100000) <= 45);
             //Test at alle de mulige værdier returneres
+            for (int i = 0; i <= 80; i++){
+                assertTrue(bonuses.contains(i));
+            }
         }
     }
 

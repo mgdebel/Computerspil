@@ -13,6 +13,10 @@ public class CityTest {
     private Game game;
     private Country country1, country2;
     private City cityA, cityB;
+
+    /**
+     * Set up the test environment
+     */
     @BeforeEach
     public void setUp() {
         // Create game object
@@ -27,6 +31,9 @@ public class CityTest {
         cityB = new City("City B", 60, country2);
     }
 
+    /**
+     * Test the constructor
+     */
     @Test
     public void constructor() {
         assertEquals("City A", cityA.getName());
@@ -39,6 +46,9 @@ public class CityTest {
         assertEquals(country2, cityB.getCountry());
     }
 
+    /**
+     * Test the bonus method
+     */
     @Test
     public void arrive(){
         for(int seed = 0; seed < 1000; seed++) { // Try different seeds
@@ -51,6 +61,9 @@ public class CityTest {
         }
     }
 
+    /**
+     * Test the changeValue method
+     */
     @Test
     public void changeValue() {
         int initialValue = cityA.getInitialValue();
@@ -66,6 +79,9 @@ public class CityTest {
         assertEquals(currentValueB - 10, cityB.getValue());
     }
 
+    /**
+     * Test the reset method
+     */
     @Test
     public void reset(){
         cityA.changeValue(100);
@@ -78,6 +94,10 @@ public class CityTest {
         assertEquals(cityA.getInitialValue(),cityA.getValue());
         assertEquals(60 + 50,cityB.getValue());
     }
+
+    /**
+     * Test the toString method
+     */
     @Test
     public void testToString() {
         assertEquals("City A (80)", cityA.toString());

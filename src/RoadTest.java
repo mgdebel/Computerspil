@@ -15,6 +15,9 @@ public class RoadTest {
     private City cityA, cityB, cityC, cityD;
     private Road road1, road2;
 
+    /**
+     * Set up the test environment
+     */
     @BeforeEach
     public void setUp() {
         // Create game object
@@ -41,6 +44,9 @@ public class RoadTest {
         road2 = new Road(cityC, cityD, 2);
     }
 
+    /**
+     * Test the constructor
+     */
     @Test
     public void constructor() {
         // Første vej går fra CityA til CityB og har længde 4
@@ -53,6 +59,9 @@ public class RoadTest {
         assertEquals(2, road2.getLength());
     }
 
+    /**
+     * Test the toString method
+     */
     @Test
     public void testToString(){
         assertEquals("City A (80) -> City B (60) : 4", road1.toString());

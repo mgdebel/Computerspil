@@ -24,7 +24,7 @@ public class City implements Comparable<City> {
     }
 
     /**
-     * Arrives at the city and receives a bonus based on the value of the city.
+     * Arrives in the city and receives a bonus based on the value of the city.
      * The value of the city is reduced by the bonus.
      * @return the bonus value
      */
@@ -33,6 +33,13 @@ public class City implements Comparable<City> {
         value -= bonus;
         return bonus;
     }
+
+    /**
+     * Arrives in the city with a specific player
+     * @param p the player arriving in the city
+     * @return the arrive method giving the bonus value
+     */
+    public int arrive (Player p) { return arrive(); }
 
     /**
      * Returns the country of the city.

@@ -21,14 +21,14 @@ import java.time.format.DateTimeFormatter;
  */
 public class TestServer {
     private static String srcDir = "";
-    private static final String testServerOnlinePath = "https://DeadViolets.github.io/IntProg-undervisningsmateriale/web/e23/opgaver/";
+    private static final String testServerOnlinePath = "https://intprogau.github.io/Materiale/web/e24/opgaver/";
 
     private TestServer() {
     }
 
     /**
      * Downloads any available updates to the testserver file.
-     * 
+     *
      * @throws IOException
      */
     public static void updateTestServer() {
@@ -38,7 +38,7 @@ public class TestServer {
             try (ReadableByteChannel rbc = Channels.newChannel(new URL(
                     testServerOnlinePath + "TestServer.java")
                     .openStream());
-                    FileOutputStream fos = new FileOutputStream(srcDir + "TestServer.java")) {
+                 FileOutputStream fos = new FileOutputStream(srcDir + "TestServer.java")) {
                 fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
                 JOptionPane.showMessageDialog(null,
                         "Din lokale testserver fil er blevet opdateret. Genstart venligst BlueJ",
@@ -80,7 +80,7 @@ public class TestServer {
     /**
      * Checks if there is an update available, used in both the public method, and
      * the download method
-     * 
+     *
      * @return true when there is an update available, otherwise false.
      */
     private static boolean updateAvailable() {
@@ -90,9 +90,9 @@ public class TestServer {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
 
         try (InputStream local = new FileInputStream(new File(srcDir + "TestServer.java"));
-                InputStream online = (new URL(
-                        testServerOnlinePath + "TestServer.java"))
-                        .openStream()) {
+             InputStream online = (new URL(
+                     testServerOnlinePath + "TestServer.java"))
+                     .openStream()) {
             LocalDate localDate = LocalDate.parse(parseVersionDate(local), dtf);
             LocalDate onlineDate = LocalDate.parse(parseVersionDate(online), dtf);
 
@@ -117,7 +117,7 @@ public class TestServer {
 
     /**
      * Parses the version date of the testserver file specified in the inputstream
-     * 
+     *
      * @param testServerInputStream - An input stream to the testserver file
      * @return The version date of the given file, as a string. uuuu-MM-dd
      *         formatted.
@@ -140,7 +140,7 @@ public class TestServer {
 
     /**
      * Downloads the latest files from the course webpage.
-     * 
+     *
      * @param exercise one of: CG1, CG3, CG5
      */
     public static void download(String exercise) throws IOException {
@@ -181,7 +181,7 @@ public class TestServer {
     /**
      * Tests exercise and open the resulting link in the default browser (if
      * uploaded successfully).
-     * 
+     *
      * @param exercise Short name of exercise.
      */
     public static void testAndOpenInBrowser(String exercise) throws IOException, URISyntaxException {
@@ -195,7 +195,7 @@ public class TestServer {
     /**
      * Tests exercise in the classpath (the folder from which the program is
      * invoked).
-     * 
+     *
      * @param exercise Short name of exercise.
      */
     public static String test(String exercise) throws IOException {
@@ -593,7 +593,7 @@ public class TestServer {
 
     /**
      * This method downloads a variable number of files as specified by files.
-     * 
+     *
      * @param version The version of the files to download. One of: cg1, cg2, cg3.
      * @param files   The files to download.
      */
@@ -610,13 +610,13 @@ public class TestServer {
             }
 
         JOptionPane.showMessageDialog(null, "Download af filer for version '" + version
-                + "' blev gennemført succesfuldt. Det kan være nødvendigt at genstarte BlueJ for at se de nye filer.",
+                        + "' blev gennemført succesfuldt. Det kan være nødvendigt at genstarte BlueJ for at se de nye filer.",
                 "Filer downloadet succesfuldt.", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
      * This method downloads a file from a url and saves it to the local machine.
-     * 
+     *
      * @param url  The url from which to download.
      * @param dest The destination of the downloaded file.
      */
@@ -634,7 +634,7 @@ public class TestServer {
     /**
      * This method sends an HTTP POST request to a specified location with some
      * arguments.
-     * 
+     *
      * @param location  URL to POST to.
      * @param arguments HTTP header arguments.
      * @return Response from the URL (if any).

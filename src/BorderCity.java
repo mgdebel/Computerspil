@@ -27,8 +27,7 @@ public class BorderCity extends City{
             changeValue(tollToBePaid);
         }
         //Calculate bonus
-        int bonus = getCountry().bonus(getValue());
-        changeValue(-bonus);
+        int bonus = super.arrive();
         //Returns the bonus - toll
         return bonus - tollToBePaid;
     }

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Tests the various methods and variables of City
+ * Tests the various methods and variables of BorderCity
  *
  * @author 202406714 Magnus Debel-Hansen og 20240543 Alexander Bak
  */

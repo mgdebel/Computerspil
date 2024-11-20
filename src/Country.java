@@ -83,15 +83,15 @@ public class Country {
         if (a.getCountry() != this && b.getCountry() != this) {
             return;
         }
-        if (a.getCountry() == this && b.getCountry() != this && getRoads(a).stream().filter(r -> r.getTo().equals(b)).findFirst().orElse(null) == null) {
+        if (a.getCountry() == this && b.getCountry() != this) {
             //City a is in this country and b is in another
             Road road = new Road(a, b, length);
             network.get(a).add(road);
-        }else if(b.getCountry() == this && a.getCountry() != this && getRoads(b).stream().filter(r -> r.getTo().equals(a)).findFirst().orElse(null) == null) {
+        }else if(b.getCountry() == this && a.getCountry() != this) {
             //City b is in this country and a is in another
             Road road = new Road(b, a, length);
             network.get(b).add(road);
-        }else if (getRoads(a).stream().filter(r -> r.getTo().equals(b)).findFirst().orElse(null) == null && getRoads(b).stream().filter(r -> r.getTo().equals(a)).findFirst().orElse(null) == null){
+        }else {
             //Both cities are in same country
             Road road1 = new Road(a, b, length);
             Road road2 = new Road(b, a, length);

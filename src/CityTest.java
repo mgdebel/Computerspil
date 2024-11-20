@@ -51,6 +51,8 @@ public class CityTest {
      */
     @Test
     public void arrive(){
+        City cityC = new City("City C", 0, country2);
+        assertEquals(0, cityC.arrive());
         for(int seed = 0; seed < 1000; seed++) { // Try different seeds
             game.getRandom().setSeed(seed); // Set seed
             int bonus = country1.bonus(80); // Remember bonus

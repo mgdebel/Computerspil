@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author 202406714 Magnus Debel-Hansen og 20240543 Alexander Bak
  */
 
-class MafiaCountryTest {
+public class MafiaCountryTest {
     private Game game;
     private MafiaCountry country1, country2;
     private BorderCity cityA, cityB, cityC;

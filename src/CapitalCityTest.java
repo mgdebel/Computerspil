@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author 202406714 Magnus Debel-Hansen og 20240543 Alexander Bak
  */
 
-class CapitalCityTest {
+public class CapitalCityTest {
     private Game game;
     private Country country1, country2;
     private CapitalCity cityA, cityB, cityC;

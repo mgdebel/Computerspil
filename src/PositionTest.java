@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests the various methods and variables of Position
  *
- * @author 202406714 Magnus Debel-Hansen og 20240543 Alexander Bak
+ * @author 202406714 Magnus Debel-Hansen and 20240543 Alexander Bak
  */
 
 public class PositionTest {
@@ -70,21 +70,20 @@ public class PositionTest {
     }
 
     /**
-     * Test the getDistance method
+     * Test the move method
      */
     @Test
     public void move() {
-        assertTrue(pos2.move());//assertEquals(true, pos2.move());
+        assertTrue(pos2.move());
         assertEquals(1, pos2.getDistance());
-        assertTrue(pos2.move());//assertEquals(..., pos2.move());
+        assertTrue(pos2.move());
         assertEquals(0, pos2.getDistance());
         assertFalse(pos2.move());
         assertEquals(0, pos2.getDistance());
         assertEquals(0, pos3.getDistance());
     }
-
     /**
-     * Test the getTotal method
+     * Test the turnAround method
      */
     @Test
     public void turnAround() {

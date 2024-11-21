@@ -3,7 +3,7 @@
  * The value can be changed and reset.
  * Cities can be compared by their names.
  *
- * @author 202406714 Magnus Debel-Hansen og 20240543 Alexander Bak
+ * @author 202406714 Magnus Debel-Hansen and 20240543 Alexander Bak
  */
 public class City implements Comparable<City> {
     private String name;
@@ -30,8 +30,18 @@ public class City implements Comparable<City> {
      */
     public int arrive() {
         int bonus = country.bonus(value);
-        value -= bonus;
+        if (bonus > 0) {
+            value -= bonus;
+        }
         return bonus;
+    }
+
+    /**
+     * Arrives at the city and receives a bonus based on the value of the city.
+     * Added so BorderCity can override this method.
+     */
+    public int arrive (Player p) {
+        return arrive();
     }
 
     /**

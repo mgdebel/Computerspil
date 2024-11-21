@@ -41,7 +41,7 @@ public abstract class Player implements Comparable<Player> {
      */
     public boolean step() {
         if(pos.move() && pos.hasArrived()) {
-            money += pos.getTo().arrive();
+            money += pos.getTo().arrive(this);
         }
         return pos.hasArrived();
     }

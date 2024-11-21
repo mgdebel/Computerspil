@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Tests the various methods and variables of Road
  *
- * @author 202406714 Magnus Debel-Hansen og 20240543 Alexander Bak
+ * @author 202406714 Magnus Debel-Hansen and 20240543 Alexander Bak
  */
 
 public class RoadTest {

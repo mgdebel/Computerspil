@@ -7,7 +7,7 @@
  * The class provides methods to move the player, turn around the player, check if the player has arrived,
  * and compare two positions.
  *
- * @author 202406714 Magnus Debel-Hansen og 20240543 Alexander Bak
+ * @author 202406714 Magnus Debel-Hansen and 20240543 Alexander Bak
  */
 public class Position {
     private City from;

@@ -112,7 +112,7 @@ public class GUI {
                         Point p = game.getPosition(c);
                         double dist = Math.hypot(p.getX() - e.getX(), p.getY() - e.getY());
                         if(dist < WorldPanel.MIN_CIRCLE_RADIUS + 5){
-                            game.clickCity(c);
+                            clickCity(c);
                         }
                     }
                 }
@@ -214,6 +214,10 @@ public class GUI {
         //Apply existing settings to current game
         applyExistingSettings();
                 
+    }
+    
+    private void clickCity(City c) {
+        game.clickCity(c);
     }
     
     /**
@@ -339,7 +343,7 @@ public class GUI {
                     }
                 }
                 if(best != null && bestAngle < Math.PI/4){
-                    game.clickCity(best);
+                    clickCity(best);
                 }
                 
                 currentDirection = -1;
@@ -659,6 +663,7 @@ public class GUI {
         g.startGUI();
     }
 }
+
 /**
  * This class models the JPanel upon which the graphics are actually drawn.
  * This class handles the "nitty gritty" details of drawing all the roads, player icons etc.
@@ -715,6 +720,7 @@ class WorldPanel extends JPanel {
         for(Player p : game.getPlayers()){
             String name = p.getClass().getName();
             try{
+                playerIcons.put("LogPlayer", ImageIO.read(new File("guiplayer.png")));
                 playerIcons.put(name, ImageIO.read(new File(name.toLowerCase()+".png")));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -725,6 +731,27 @@ class WorldPanel extends JPanel {
             this.img = ImageIO.read(new File("map.png"));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private class ImageLabel extends JLabel{
+        private Image _myimage;
+
+        public ImageLabel(String text){
+            super(text);
+        }
+
+        public void setIcon(Icon icon) {
+            super.setIcon(icon);
+            if (icon instanceof ImageIcon)
+            {
+                _myimage = ((ImageIcon) icon).getImage();
+            }
+        }
+
+        @Override
+        public void paint(Graphics g){
+            g.drawImage(_myimage, 0, 0, this.getWidth(), this.getHeight(), null);
         }
     }
 
@@ -808,7 +835,12 @@ class WorldPanel extends JPanel {
         // City info
         if(GUI.hover != null) {
             g2d.setFont(FONT_SC);
-            g2d.drawString(GUI.hover.getCountry().getName().toUpperCase(), 350, 470);
+            if(GUI.hover.getClass() == CapitalCity.class) {
+                g2d.drawString("Capital of "+GUI.hover.getCountry().getName().toUpperCase(), 350, 470);
+            }
+            else {
+                g2d.drawString(GUI.hover.getCountry().getName().toUpperCase(), 350, 470);
+            }
             g2d.setFont(FONT_BODY);
             g2d.drawString(GUI.hover.getValue()+" €", 350, 486);
             g2d.setFont(FONT_HEADER);
@@ -840,8 +872,6 @@ class WorldPanel extends JPanel {
             drawPlayer(g2d, player, true);
         }
 
-        // Draw test objects
-        //drawTests(g2d);
     }
 
     /**
@@ -869,41 +899,6 @@ class WorldPanel extends JPanel {
 
         for(int i=0; i<r.getLength(); i++)
             drawRoadDot(g2d, r, i);
-    }
-    
-    private void drawTests(Graphics2D g2d) {
-        int radius = MIN_CIRCLE_RADIUS;
-        Ellipse2D.Double shape = null;
-        
-        shape = new Ellipse2D.Double(0-radius,0-radius, 2*radius, 2*radius);
-        g2d.setColor(Color.BLACK);
-        g2d.fill(shape);
-        g2d.setColor(COLOR_CITY_STROKE);
-        g2d.draw(shape);
-        
-        shape = new Ellipse2D.Double(500-radius,0-radius, 2*radius, 2*radius);
-        g2d.setColor(Color.BLACK);
-        g2d.fill(shape);
-        g2d.setColor(COLOR_CITY_STROKE);
-        g2d.draw(shape);
-        
-        shape = new Ellipse2D.Double(0-radius,635-radius, 2*radius, 2*radius);
-        g2d.setColor(Color.BLACK);
-        g2d.fill(shape);
-        g2d.setColor(COLOR_CITY_STROKE);
-        g2d.draw(shape);
-        
-        shape = new Ellipse2D.Double(500-radius,635-radius, 2*radius, 2*radius);
-        g2d.setColor(Color.BLACK);
-        g2d.fill(shape);
-        g2d.setColor(COLOR_CITY_STROKE);
-        g2d.draw(shape);
-        
-        shape = new Ellipse2D.Double(382,396, 2*radius, 2*radius);
-        g2d.setColor(Color.BLACK);
-        g2d.fill(shape);
-        g2d.setColor(COLOR_CITY_STROKE);
-        g2d.draw(shape);
     }
 
     /**
@@ -1013,6 +1008,7 @@ class WorldPanel extends JPanel {
         int radius = MIN_CIRCLE_RADIUS;
 
         if(c.equals(GUI.hover)) { radius = radius + 2; }
+        if(c.getClass() == CapitalCity.class) { radius = radius + 3; }
 
         Ellipse2D.Double shape = new Ellipse2D.Double(pos.x - radius, pos.y - radius, 2*radius, 2*radius);
         double val = Math.pow(c.getValue() / 250.0, 1.0);

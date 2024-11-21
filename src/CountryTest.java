@@ -9,13 +9,14 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests the various methods and variables of Country
  *
- * @author 202406714 Magnus Debel-Hansen og 20240543 Alexander Bak
+ * @author 202406714 Magnus Debel-Hansen and 20240543 Alexander Bak
  */
 
 public class CountryTest {
     private Game game;
     private Country country1, country2;
     private City cityA, cityB, cityC;
+
     @BeforeEach
     public void setUp() {
         // Create game object
@@ -29,30 +30,29 @@ public class CountryTest {
         cityA = new City("City A", 80, country1);
         cityB = new City("City B", 60, country1);
         cityC = new City("City C", 40, country2);
+
+        country1.addCity(cityA);
+        country1.addCity(cityB);
+        country2.addCity(cityC);
     }
 
     @Test
     public void constructor() {
         assertEquals("Country 1", country1.getName());
-        assertEquals(0, country1.getCities().size());
+        assertEquals(2, country1.getCities().size());
         assertEquals("Country 2", country2.getName());
-        assertEquals(0, country2.getCities().size());
+        assertEquals(1, country2.getCities().size());
     }
 
     @Test
     public void getCities() {
-        country1.addCity(cityA);
-        country1.addCity(cityB);
-        country2.addCity(cityB);
+
         assertEquals(2, country1.getCities().size());
         assertEquals(1, country2.getCities().size());
     }
 
     @Test
     public void getCity() {
-        country1.addCity(cityA);
-        country1.addCity(cityB);
-        country2.addCity(cityB);
         assertEquals(cityA, country1.getCity("City A"));
         assertEquals(cityB, country1.getCity("City B"));
         assertNull(country2.getCity("City A"));
@@ -62,96 +62,91 @@ public class CountryTest {
 
     @Test
     public void getRoads() {
-        assertEquals(0,country1.getRoads(cityA).size());
-        country1.addCity(cityA);
-        country1.addCity(cityB);
-        country1.addCity(cityC);
-        country1.addRoads(cityA,cityB,5);
-        assertEquals(1,country1.getRoads(cityA).size());
-        country1.addRoads(cityC,cityA,5);
-        assertEquals(2,country1.getRoads(cityA).size());
-        country1.addRoads(cityC,cityB,2);
-        assertEquals(2,country1.getRoads(cityA).size());
-        assertEquals(2,country1.getRoads(cityB).size());
-        assertEquals(2,country1.getRoads(cityC).size());
+        // Test that cityA has no roads initially
+        assertEquals(0, country1.getRoads(cityA).size());
+
+        // Test that cityA and cityB contains the correct amount of roads after adding roads
+        country1.addRoads(cityA, cityB,5);
+        assertEquals(1, country1.getRoads(cityA).size());
+        assertEquals(1, country1.getRoads(cityB).size());
+        country1.addRoads(cityC, cityA,5);
+        assertEquals(2, country1.getRoads(cityA).size());
+        country1.addRoads(cityC, cityB,2);
+        assertEquals(2, country1.getRoads(cityA).size());
+        assertEquals(2, country1.getRoads(cityB).size());
+
+        // Test that cityC has no roads as it is in a different country
+        assertEquals(0, country1.getRoads(cityC).size());
     }
 
     @Test
     public void addCity() {
-        country1.addCity(cityA);
-        assertEquals(1, country1.getCities().size());
-        assertEquals(cityA, country1.getCity("City A"));
-        country1.addCity(cityB);
+        // addCity is called twice on country1 in setUp
         assertEquals(2, country1.getCities().size());
+        assertEquals(cityA, country1.getCity("City A"));
         assertEquals(cityB, country1.getCity("City B"));
-        assertEquals(0, country2.getCities().size());
+
+        // addCity is called once on country2 in setUp
+        assertEquals(1, country2.getCities().size());
         assertNotEquals(cityA, country2.getCity("City A"));
         assertNull(country2.getCity("City A"));
+
+        // Test that a new country has no cities
+        Country country3 = new Country("Country 3");
+        assertEquals(0, country3.getCities().size());
     }
 
     @Test
     public void position() {
-        country1.addCity(cityA);
-        country1.addCity(cityB);
-        country1.addCity(cityC);
+        // Test that the method returns a position object with the correct values
         Position positionA = country1.position(cityA);
-        assertEquals(0,positionA.getDistance());
-        assertEquals(0,positionA.getTotal());
+        assertEquals(0, positionA.getDistance());
+        assertEquals(0, positionA.getTotal());
         positionA.move();
-        assertEquals(0,positionA.getDistance());
-        assertEquals(0,positionA.getTotal());
+        assertEquals(0, positionA.getDistance());
+        assertEquals(0, positionA.getTotal());
         positionA.turnAround();
-        assertEquals(0,positionA.getDistance());
-        assertEquals(0,positionA.getTotal());
-        Position positionB = country2.position(cityB);
+        assertEquals(0, positionA.getDistance());
+        assertEquals(0, positionA.getTotal());
     }
 
     @Test
     public void readyToTravel() {
-        country1.addCity(cityA);
-        country1.addCity(cityB);
-        country2.addCity(cityC);
+        // Test when the two cities are connected
         country1.addRoads(cityA,cityB,5);
-        Position position1 = country1.readyToTravel(cityC,cityA);
-        Position position2 = country1.readyToTravel(cityA,cityA);
-        Position position3 = country1.readyToTravel(cityA,cityB);
-        assertEquals(0,position1.getDistance());
-        assertEquals(0,position2.getDistance());
-        assertEquals(5,position3.getDistance());
-        assertEquals(cityC,position1.getFrom());
-        assertEquals(cityC,position1.getTo());
-        assertEquals(cityA,position2.getFrom());
-        assertEquals(cityA,position2.getTo());
-        assertEquals(cityA,position3.getFrom());
-        assertEquals(cityB,position3.getTo());
-        position3.turnAround();
-        assertEquals(0,position3.getDistance());
+        assertEquals(new Position(cityA, cityB, 5), country1.readyToTravel(cityA, cityB));
+
+        // Test when the two cities are not connected
+        assertEquals(new Position(cityA, cityA, 0), country1.readyToTravel(cityA, cityC));
+
+        // Test when the two cities are the same
+        assertEquals(new Position(cityA, cityA, 0), country1.readyToTravel(cityA, cityA));
+
     }
 
     @Test
     public void addRoads() {
-        country1.addCity(cityA);
-        country2.addCity(cityB);
-        country2.addCity(cityC);
-        City cityD = new City("City D",30,country2);
-        country1.addCity(cityD);
+        // Test that the method does not add a road if from and to are the same
         country1.addRoads(cityA, cityA, 10);
         assertEquals(0, country1.getRoads(cityA).size());
-        country1.addRoads(cityA, cityD, 0);
+
+        // Test that the method does not add a road if length is less than or equal to 0
+        country1.addRoads(cityA, cityB, 0);
+        country1.addRoads(cityA, cityB, -10);
         assertEquals(0, country1.getRoads(cityA).size());
-        country1.addRoads(cityA, cityD, 1);
+
+        // Test that the method adds a road between two cities in the same country
+        country1.addRoads(cityA, cityB, 1);
         assertEquals(1, country1.getRoads(cityA).size());
-        assertEquals(1, country1.getRoads(cityD).size());
+        assertEquals(1, country1.getRoads(cityB).size());
+
+        // Test that the method only adds a road to a city if the city is in the country
         country1.addRoads(cityB, cityC, 10);
-        assertEquals(0, country1.getRoads(cityB).size());
-        assertEquals(0, country1.getRoads(cityC).size());
-        country1.addRoads(cityA, cityD, 10);
-        assertEquals(2, country1.getRoads(cityA).size());
-        assertEquals(2, country1.getRoads(cityD).size());
-        country1.addRoads(cityA, cityB, 10);
-        assertEquals(3, country1.getRoads(cityA).size());
-        country1.addRoads(cityB, cityA, 10);
-        assertEquals(0, country1.getRoads(cityB).size());
+        assertEquals(1 + 1, country1.getRoads(cityB).size());
+        assertEquals(0, country2.getRoads(cityC).size());
+
+        country2.addRoads(cityA, cityB, 10);
+        assertEquals(1, country1.getRoads(cityA).size());
     }
 
     @Test
@@ -165,9 +160,6 @@ public class CountryTest {
     }
     @Test
     public void reset() {
-        country1.addCity(cityA);
-        country1.addCity(cityB);
-        country2.addCity(cityC);
         cityA.arrive(); cityA.arrive(); cityA.arrive();
         cityC.arrive(); cityC.arrive(); cityC.arrive();
         int valueE = cityC.getValue(); // Remember value of cityE
@@ -181,30 +173,31 @@ public class CountryTest {
     public void bonus() {
         assertEquals(0,country1.bonus(0) );
         assertEquals(0,country1.bonus(-1) );
-        for(int seed = 0; seed < 100; seed++) { // Try 100 different seeds
+        for(int seed = 0; seed < 100; seed++) {
             game.getRandom().setSeed(seed);
             ArrayList<Integer> bonuses = new ArrayList<Integer>();
             int sum = 0;
-            for(int i = 0; i < 100000; i++) { // Call method 100.000 times
+            for(int i = 0; i < 100000; i++) {
                 int bonus = country1.bonus(80);
                 bonuses.add(bonus);
                 sum += bonus;
-                //Test at værdien ligger i det korrekte interval
+
+                //Test the value is in the correct interval
                 assertTrue(bonus >= 0);
                 assertTrue(bonus <= 80);
 
             }
-            for(int i = 0; i < 100000; i++) { // Call method 100.000 times
+            for(int i = 0; i < 100000; i++) {
                 int bonus = country1.bonus(1);
-                //Test at værdien ligger i det korrekte interval
-                assertTrue(bonus >= 0);
-                assertTrue(bonus <= 1);
 
+                //Test the value is in the correct interval
+                assertTrue(bonus == 0 || bonus == 1);
             }
-            //Test at middelværdien er tæt på det forventede
+            //Test the average value is in the correct interval
             assertTrue(((double) sum) / ((double)100000) >= 35);
             assertTrue(((double) sum) / ((double)100000) <= 45);
-            //Test at alle de mulige værdier returneres
+
+            //Test that all possible values are generated
             for (int i = 0; i <= 80; i++){
                 assertTrue(bonuses.contains(i));
             }
@@ -213,7 +206,7 @@ public class CountryTest {
 
     @Test
     public void testToString() {
-        assertEquals("Country 1",country1.toString());
-        assertEquals("Country 2",country2.toString());
+        assertEquals("Country 1", country1.toString());
+        assertEquals("Country 2", country2.toString());
     }
 }

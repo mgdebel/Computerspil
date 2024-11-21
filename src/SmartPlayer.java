@@ -214,6 +214,14 @@ class PlayerPath {
     public double valueFrom(Road r, int penalty) {
         Settings s = r.getFrom().getCountry().getGame().getSettings();
         double v = r.getFrom().getValue() / (Math.pow(2,penalty-1) * Math.pow(impulsiveness, edges.size()));
+        // Check if we visit a CapitalCity
+        if(r.getFrom() instanceof CapitalCity) {
+            v -= value/2;
+        }
+        // Check if we are in a MafiaCountry
+        if(r.getFrom().getCountry() instanceof MafiaCountry) {
+            v -= s.getRisk() / 100.0 * (s.getMinRobbery() + s.getMaxRobbery())/2;
+        }
         return v;
     }
 
@@ -231,6 +239,18 @@ class PlayerPath {
     public double valueTo(Road r, int penalty) {
         Settings s = r.getFrom().getCountry().getGame().getSettings();
         double v = r.getTo().getValue() / (Math.pow(2,penalty-1) * Math.pow(impulsiveness, edges.size()));
+        // Check if we visit a BorderCity
+        if(r.getTo() instanceof BorderCity && !r.getFrom().getCountry().equals(r.getTo().getCountry())) {
+            v -= source.getMoney() * s.getTollToBePaid() / 100.0;
+        }
+        // Check if we visit a CapitalCity
+        if(r.getTo() instanceof CapitalCity) {
+            v -= source.getMoney()/2;
+        }
+        // Check if we are in a MafiaCountry
+        if(r.getTo().getCountry() instanceof MafiaCountry) {
+            v -= s.getRisk() / 100.0 * (s.getMinRobbery() + s.getMaxRobbery())/2;
+        }
         return v;
     }
 }

@@ -4,7 +4,7 @@ import java.util.*;
  * A country with a network of cities and roads.
  * The network is represented as a map from cities to sets of roads.
  *
- * @author 202406714 Magnus Debel-Hansen og 20240543 Alexander Bak
+ * @author 202406714 Magnus Debel-Hansen and 20240543 Alexander Bak
  */
 public class Country {
     private String name;
@@ -13,6 +13,7 @@ public class Country {
 
     /**
      * Creates a country with a name.
+     *
      * @param name: the name of the country
      */
     public Country(String name) {
@@ -27,6 +28,7 @@ public class Country {
 
     /**
      * Adds a city to the country.
+     *
      * @param c the city to add
      */
     public void addCity(City c) {
@@ -35,22 +37,21 @@ public class Country {
 
     /**
      * Creates a position where the player is at a city.
+     *
      * @param city the city where the player is
-     * @return a position where the player is at the city or null if the city is not part of the country
+     * @return a position where the player is at the city
      */
     public Position position(City city) {
-        if(getCity(city.getName()) != null) {
-            return new Position(city, city, 0);
-        }
-        return null;
+        return new Position(city, city, 0);
     }
 
     /**
      * Creates a position where the player is ready to travel from one city to another.
      * If the cities are the same, the player is already at the destination.
      * If there is no road between the cities, the from position is returned.
+     *
      * @param from the city where the player is coming from
-     * @param to the city where the player is going to
+     * @param to   the city where the player is going to
      * @return a position where the player is ready to travel
      */
     public Position readyToTravel(City from, City to) {
@@ -58,9 +59,6 @@ public class Country {
             return position(from);
         }
         Road road = getRoads(from).stream().filter(r -> r.getTo().equals(to)).findFirst().orElse(null);
-        if(road == null){
-            road = getRoads(to).stream().filter(r -> r.getFrom().equals(from)).findFirst().orElse(null);
-        }
         if (road == null) {
             return position(from);
         }
@@ -69,8 +67,9 @@ public class Country {
 
     /**
      * Adds roads between two cities with a given length.
-     * @param a the first city
-     * @param b the second city
+     *
+     * @param a      the first city
+     * @param b      the second city
      * @param length the length of the road
      */
     public void addRoads(City a, City b, int length) {
@@ -80,28 +79,17 @@ public class Country {
         if (a.equals(b)) {
             return;
         }
-        if (a.getCountry() != this && b.getCountry() != this) {
-            return;
+        if (network.containsKey(a)) {
+            network.get(a).add(new Road(a, b, length));
         }
-        if (a.getCountry() == this && b.getCountry() != this && getRoads(a).stream().filter(r -> r.getTo().equals(b)).findFirst().orElse(null) == null) {
-            //City a is in this country and b is in another
-            Road road = new Road(a, b, length);
-            network.get(a).add(road);
-        }else if(b.getCountry() == this && a.getCountry() != this && getRoads(b).stream().filter(r -> r.getTo().equals(a)).findFirst().orElse(null) == null) {
-            //City b is in this country and a is in another
-            Road road = new Road(b, a, length);
-            network.get(b).add(road);
-        }else if (getRoads(a).stream().filter(r -> r.getTo().equals(b)).findFirst().orElse(null) == null && getRoads(b).stream().filter(r -> r.getTo().equals(a)).findFirst().orElse(null) == null){
-            //Both cities are in same country
-            Road road1 = new Road(a, b, length);
-            Road road2 = new Road(b, a, length);
-            network.get(a).add(road1);
-            network.get(b).add(road2);
+        if (network.containsKey(b)) {
+            network.get(b).add(new Road(b, a, length));
         }
     }
 
     /**
      * Calculates a bonus value based on a given value.
+     *
      * @param value the maximum value of the bonus
      * @return a random bonus value between 0 and the given value
      */
@@ -130,6 +118,7 @@ public class Country {
 
     /**
      * Gets a city by its name.
+     *
      * @param name: the name of the city
      * @return the city with the given name, or null if no such city exists
      */
@@ -153,6 +142,7 @@ public class Country {
 
     /**
      * Gets all roads connected to a city.
+     *
      * @param city the city to get roads from
      * @return a set of roads connected to the city
      */
@@ -162,6 +152,7 @@ public class Country {
 
     /**
      * Checks if two countries are equal.
+     *
      * @param otherObject the object to compare to
      * @return true if the countries are equal, false otherwise
      */
@@ -176,6 +167,7 @@ public class Country {
 
     /**
      * Generates a hash code for a country.
+     *
      * @return a hash code for the country
      */
     @Override

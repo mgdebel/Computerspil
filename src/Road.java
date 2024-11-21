@@ -6,7 +6,7 @@
  * The comparison is done first by the from city, then by the to city, and finally by the length.
  * The class also overrides equals and hashCode methods.
  *
- * @author 202406714 Magnus Debel-Hansen og 20240543 Alexander Bak
+ * @author 202406714 Magnus Debel-Hansen and 20240543 Alexander Bak
  */
 public class Road implements Comparable<Road> {
     private City from;

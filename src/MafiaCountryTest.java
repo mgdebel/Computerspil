@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author 202406714 Magnus Debel-Hansen and 20240543 Alexander Bak
  */
-
 public class MafiaCountryTest {
     private Game game;
     private Country country1, country2;

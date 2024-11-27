@@ -20,7 +20,9 @@ public class CapitalCity extends BorderCity {
     public int arrive(Player p) {
         int bonus = super.arrive(p);
 
-        int spent = getCountry().getGame().getRandom().nextInt(p.getMoney() + bonus + 1);
+        // When arriving at a mafia capital, there is a slight risk that p.getMoney() + bonus + 1 is negative.
+        // In this case, the player will spend nothing.
+        int spent = getCountry().getGame().getRandom().nextInt(Math.max(p.getMoney() + bonus + 1, 1));
         changeValue(spent);
 
         return bonus - spent;

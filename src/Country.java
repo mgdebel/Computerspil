@@ -21,6 +21,11 @@ public class Country {
         this.network = new TreeMap<>();
     }
 
+    /**
+     * Returns the name of the country.
+     *
+     * @return the name of the country
+     */
     @Override
     public String toString() {
         return name;
@@ -100,18 +105,38 @@ public class Country {
         return game.getRandom().nextInt(value + 1);
     }
 
+    /**
+     * Returns the game the country is in.
+     *
+     * @return the game the country is in
+     */
     public Game getGame() {
         return game;
     }
 
+    /**
+     * Sets the game the country is in.
+     *
+     * @param game the game the country is in
+     */
     public void setGame(Game game) {
         this.game = game;
     }
 
+    /**
+     * Returns the name of the country.
+     *
+     * @return the name of the country
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Returns all cities in the country.
+     *
+     * @return a set of all cities in the country
+     */
     public Set<City> getCities() {
         return network.keySet();
     }
